@@ -5,4 +5,4 @@ entrypoint = "src/lib.typ"
 authors = ["Vijay Ramanathan"]
 license = "MIT"
 description = "Math Environment boxes for theorems, definitions and more."
-# repository = "https://github.com/shadowmachete"
+repository = "https://github.com/shadowmachete/typst-envboxes"

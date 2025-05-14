@@ -1,4 +1,4 @@
-#import "@math/envboxes:0.1.0": *
+#import "../src/lib.typ": *
 
 #show: env-init
 
