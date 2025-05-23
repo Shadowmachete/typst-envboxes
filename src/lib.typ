@@ -1,8 +1,13 @@
 #let set-heading(body) = {
   set heading(numbering : "1.")
+  body
+}
 
+#let show-heading(body) = {
   show heading: it => block[
-    #counter("Envbox").update(0)
+    #context {
+      counter("Envbox")
+    }
     #counter(heading).display(it.numbering) #it.body
   ]
   body
@@ -34,20 +39,28 @@
   #context { heading-counter.display() }#context { other-counter.display() }
 ]
 
-#let env-counter = counter("Envbox")
-
 #let no-counter = ("Example", "Remark", "Note", "Claim")
+
+#let _state_headers = state("headers", ())
+
+#let add_header(header) = {
+  context {
+    _state_headers.update(headers => {
+      headers.push(header)
+      headers
+    })
+  }
+}
 
 #let envbox(
   header: "Envbox",
-  // box-colours: box-colours,
   colour: "default",
   width: 100%,
   radius: 4pt,
   title: none,
   lighten_percent: 75%,
   darken_percent: 50%,
-  counter: env-counter,
+  provided-counter: none, // optional
   body
 ) = {
   let main-colour = gray.darken(darken_percent)
@@ -64,9 +77,19 @@
     body-colour = colour.lighten(lighten_percent)
   }
 
+  let resolved-counter = if provided-counter != none {
+    provided-counter
+  } else if not no-counter.contains(header) {
+    counter(header)
+  } else {
+    none
+  }
+
   return block[
-    #if not no-counter.contains(header) {
-      counter.step()
+    #context {
+      if not _state_headers.get().contains(header) { 
+        add_header(header)
+      }
     }
     #box(
       stroke: main-colour,
@@ -82,7 +105,10 @@
           width: width,
         )[
           #text(fill: white)[#header
-            #if not no-counter.contains(header) { display-counter(counter) }
+            #if resolved-counter != none {
+              resolved-counter.step()
+              display-counter(resolved-counter)
+            }
             #if title != none { ": " + title}
           ]
         ],

@@ -1,4 +1,4 @@
-#import "../src/lib.typ": *
+#import "@math/envboxes:0.1.0": *
 
 #show: env-init
 
@@ -70,3 +70,12 @@ Splitting into sections of 2 to test subsection / section counter
 = Axiom box test
 #axiom[This is a axiom without title]
 #axiom(title: "Axiom title")[This is a axiom with a title]
+
+= Test multiple boxes in a section and subsection
+#theorem(title: "Cosine rule")[$c^2 = a^2 + b^2 - 2a*b*cos(c)$ for any triangle]
+#corollary(title: "Corollary to cosine rule ")[$c^2 = a^2 + b^2$ for a right angled triangle]
+== Subsection test
+#corollary[ooga booga]
+
+= Kayie Box Test
+#note[Kayie was here]
