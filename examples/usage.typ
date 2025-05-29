@@ -1,6 +1,8 @@
-#import "@math/envboxes:0.1.0": *
+#import "@math/envboxes:0.1.1": *
 
 #show: env-init
+
+#set-envbox-style("kayie")
 
 = Initial test
 #envbox[this is a test]
